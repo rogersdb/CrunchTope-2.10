@@ -5939,6 +5939,15 @@ IF (nBoundaryConditionZone > 0) THEN
         s(i,jx,jy,jz)        = scond(i,ConditionNumber)
       END DO
 
+      IF (DensityModule /= 'temperature') THEN
+        MeanSaltConcentration = 0.001d0*(wtaq(MeanSalt(1))*scond(MeanSalt(1),ConditionNumber) +   &
+            wtaq(MeanSalt(2))*scond(MeanSalt(2),ConditionNumber))
+        MassFraction = 1.0d0/(1.0d0 + MeanSaltConcentration)
+      ELSE
+        MassFraction = 1.0d0
+      END IF
+      convert = rocond(ConditionNumber)*porcond(ConditionNumber)*SaturationCond(ConditionNumber)*MassFraction
+
       DO kk = 1,ngas
         spgas10(kk,jx,jy,jz) = spcondgas10(kk,ConditionNumber)
         spgas(kk,jx,jy,jz)   = spcondgas(kk,ConditionNumber)
@@ -5991,6 +6000,15 @@ IF (nBoundaryConditionZone > 0) THEN
       DO i = 1,ncomp
         s(i,jx,jy,jz)        = scond(i,ConditionNumber)
       END DO
+
+      IF (DensityModule /= 'temperature') THEN
+        MeanSaltConcentration = 0.001d0*(wtaq(MeanSalt(1))*scond(MeanSalt(1),ConditionNumber) +   &
+            wtaq(MeanSalt(2))*scond(MeanSalt(2),ConditionNumber))
+        MassFraction = 1.0d0/(1.0d0 + MeanSaltConcentration)
+      ELSE
+        MassFraction = 1.0d0
+      END IF
+      convert = rocond(ConditionNumber)*porcond(ConditionNumber)*SaturationCond(ConditionNumber)*MassFraction
 
       DO kk = 1,ngas
         spgas10(kk,jx,jy,jz) = spcondgas10(kk,ConditionNumber)
@@ -6047,6 +6065,15 @@ IF (nBoundaryConditionZone > 0) THEN
           s(i,jx,jy,jz)        = scond(i,ConditionNumber)
         END DO
 
+        IF (DensityModule /= 'temperature') THEN
+          MeanSaltConcentration = 0.001d0*(wtaq(MeanSalt(1))*scond(MeanSalt(1),ConditionNumber) +   &
+              wtaq(MeanSalt(2))*scond(MeanSalt(2),ConditionNumber))
+          MassFraction = 1.0d0/(1.0d0 + MeanSaltConcentration)
+        ELSE
+          MassFraction = 1.0d0
+        END IF
+        convert = rocond(ConditionNumber)*porcond(ConditionNumber)*SaturationCond(ConditionNumber)*MassFraction
+
         DO kk = 1,ngas
           spgas10(kk,jx,jy,jz) = spcondgas10(kk,ConditionNumber)
           spgas(kk,jx,jy,jz)   = spcondgas(kk,ConditionNumber)
@@ -6099,6 +6126,15 @@ IF (nBoundaryConditionZone > 0) THEN
         DO i = 1,ncomp
           s(i,jx,jy,jz)        = scond(i,ConditionNumber)
         END DO
+
+        IF (DensityModule /= 'temperature') THEN
+          MeanSaltConcentration = 0.001d0*(wtaq(MeanSalt(1))*scond(MeanSalt(1),ConditionNumber) +   &
+              wtaq(MeanSalt(2))*scond(MeanSalt(2),ConditionNumber))
+          MassFraction = 1.0d0/(1.0d0 + MeanSaltConcentration)
+        ELSE
+          MassFraction = 1.0d0
+        END IF
+        convert = rocond(ConditionNumber)*porcond(ConditionNumber)*SaturationCond(ConditionNumber)*MassFraction
 
         DO kk = 1,ngas
           spgas10(kk,jx,jy,jz) = spcondgas10(kk,ConditionNumber)
@@ -6158,6 +6194,15 @@ IF (nBoundaryConditionZone > 0) THEN
           s(i,jx,jy,jz)        = scond(i,ConditionNumber)
         END DO
 
+        IF (DensityModule /= 'temperature') THEN
+          MeanSaltConcentration = 0.001d0*(wtaq(MeanSalt(1))*scond(MeanSalt(1),ConditionNumber) +   &
+              wtaq(MeanSalt(2))*scond(MeanSalt(2),ConditionNumber))
+          MassFraction = 1.0d0/(1.0d0 + MeanSaltConcentration)
+        ELSE
+          MassFraction = 1.0d0
+        END IF
+        convert = rocond(ConditionNumber)*porcond(ConditionNumber)*SaturationCond(ConditionNumber)*MassFraction
+
         DO kk = 1,ngas
           spgas10(kk,jx,jy,jz) = spcondgas10(kk,ConditionNumber)
           spgas(kk,jx,jy,jz)   = spcondgas(kk,ConditionNumber)
@@ -6211,6 +6256,15 @@ IF (nBoundaryConditionZone > 0) THEN
         DO i = 1,ncomp
           s(i,jx,jy,jz)        = scond(i,ConditionNumber)
         END DO
+
+        IF (DensityModule /= 'temperature') THEN
+          MeanSaltConcentration = 0.001d0*(wtaq(MeanSalt(1))*scond(MeanSalt(1),ConditionNumber) +   &
+              wtaq(MeanSalt(2))*scond(MeanSalt(2),ConditionNumber))
+          MassFraction = 1.0d0/(1.0d0 + MeanSaltConcentration)
+        ELSE
+          MassFraction = 1.0d0
+        END IF
+        convert = rocond(ConditionNumber)*porcond(ConditionNumber)*SaturationCond(ConditionNumber)*MassFraction
 
         DO kk = 1,ngas
           spgas10(kk,jx,jy,jz) = spcondgas10(kk,ConditionNumber)
