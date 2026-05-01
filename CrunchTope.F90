@@ -1092,7 +1092,7 @@ DO jz = 1,nz
   DO jy = 1,ny
     DO jx = 1,nx
       DO npt = 1,npot
-        LogPotential(npt,jx,jy,jz) = LogPotentialInit(npt,jinit(jx,jy,jz))
+        LogPotential(npt,jx,jy,jz) = LogPotentialInit(ispot(npt),jinit(jx,jy,jz))
       END DO
     END DO
   END DO
@@ -2244,12 +2244,11 @@ DO WHILE (nn <= nend)
                  IF (DABS(xn(ind)) > errmax) THEN
                     errmax = DABS(xn(ind))
                  END IF
-    !!!             IF (DABS(xn(ind)) > 0.9d0) THEN
-    !!!               xn(ind) = SIGN(0.9d0,xn(ind))
-    !!!               CONTINUE
-    !!!              ELSE
-    !!!                CONTINUE
-    !!!              END IF
+                  IF (DABS(xn(ind)) > 0.9d0) THEN
+                    xn(ind) = SIGN(0.9d0,xn(ind))
+                  ELSE
+                    CONTINUE
+                  END IF
                   LogPotential(npt,jx,jy,jz) = LogPotential(npt,jx,jy,jz) + xn(ind)
                 END DO
               END DO

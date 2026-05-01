@@ -388,7 +388,7 @@ DO npt = 1,npot
       sum = 0.0
       DO ns = 1,nsurf_sec
         delta_z = zsurf(ns+nsurf) - zsurf(islink(ns))
-        IF (islink(ns) == ispot(npt2)) THEN
+        IF (ksurf(islink(ns)) == ksurf(ispot(npt2))) THEN
           sum = sum - zsurf(ns+nsurf)*spsurf10(ns+nsurf,jx,jy,jz)*delta_z*2.0
         END IF
       END DO

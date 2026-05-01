@@ -2511,9 +2511,7 @@ isdepend = 0
 dependex = 0.0
 dependsurf = 0.0d0
 
-DO is = 1,nsurf
-  ispot(is) = is
-END DO
+ispot = 0
 
 ALLOCATE(stringarray(ncomp+nspec+nrct))
 stringarray = ' '
@@ -2717,6 +2715,15 @@ DO k = 1,nrct
      npot = npot + 1
      kpot(npot) = k
   END IF
+END DO
+
+DO npt = 1,npot
+  DO is = 1,nsurf
+    IF (iedl(is) == 0 .AND. ksurf(is) == kpot(npt)) THEN
+      ispot(npt) = is
+      EXIT
+    END IF
+  END DO
 END DO
 
 IF (ALLOCATED(surfcharge_init)) THEN
@@ -5939,6 +5946,15 @@ IF (nBoundaryConditionZone > 0) THEN
         s(i,jx,jy,jz)        = scond(i,ConditionNumber)
       END DO
 
+      IF (DensityModule /= 'temperature') THEN
+        MeanSaltConcentration = 0.001d0*(wtaq(MeanSalt(1))*scond(MeanSalt(1),ConditionNumber) +   &
+            wtaq(MeanSalt(2))*scond(MeanSalt(2),ConditionNumber))
+        MassFraction = 1.0d0/(1.0d0 + MeanSaltConcentration)
+      ELSE
+        MassFraction = 1.0d0
+      END IF
+      convert = rocond(ConditionNumber)*porcond(ConditionNumber)*SaturationCond(ConditionNumber)*MassFraction
+
       DO kk = 1,ngas
         spgas10(kk,jx,jy,jz) = spcondgas10(kk,ConditionNumber)
         spgas(kk,jx,jy,jz)   = spcondgas(kk,ConditionNumber)
@@ -5947,14 +5963,19 @@ IF (nBoundaryConditionZone > 0) THEN
       do ix = 1,nexchange
         spex(ix,jx,jy,jz)    = spcondex(ix,ConditionNumber)
       end do
-      DO ix = 1,nexchange+nexch_sec
+      DO ix = 1,nexch_sec
         spex10(ix+nexchange,jx,jy,jz) = convert*spcondex10(ix+nexchange,ConditionNumber)  ! Now in eq/m3 por. med.
       END DO
 
       DO is = 1,nsurf
         spsurf(is,jx,jy,jz)   = LOG(convert*spcondsurf10(is,ConditionNumber))
         IF (iedl(is) == 0) THEN
-          LogPotential(is,jx,jy,jz) = LogPotentialInit(is,ConditionNumber)
+          DO npt = 1,npot
+            IF (ksurf(is) == kpot(npt)) THEN
+              LogPotential(npt,jx,jy,jz) = LogPotentialInit(is,ConditionNumber)
+              EXIT
+            END IF
+          END DO
         END IF
       END DO
       DO is = 1,nsurf+nsurf_sec
@@ -5992,6 +6013,15 @@ IF (nBoundaryConditionZone > 0) THEN
         s(i,jx,jy,jz)        = scond(i,ConditionNumber)
       END DO
 
+      IF (DensityModule /= 'temperature') THEN
+        MeanSaltConcentration = 0.001d0*(wtaq(MeanSalt(1))*scond(MeanSalt(1),ConditionNumber) +   &
+            wtaq(MeanSalt(2))*scond(MeanSalt(2),ConditionNumber))
+        MassFraction = 1.0d0/(1.0d0 + MeanSaltConcentration)
+      ELSE
+        MassFraction = 1.0d0
+      END IF
+      convert = rocond(ConditionNumber)*porcond(ConditionNumber)*SaturationCond(ConditionNumber)*MassFraction
+
       DO kk = 1,ngas
         spgas10(kk,jx,jy,jz) = spcondgas10(kk,ConditionNumber)
         spgas(kk,jx,jy,jz)   = spcondgas(kk,ConditionNumber)
@@ -6000,14 +6030,19 @@ IF (nBoundaryConditionZone > 0) THEN
       do ix = 1,nexchange
         spex(ix,jx,jy,jz)    = spcondex(ix,ConditionNumber)
       end do
-      DO ix = 1,nexchange+nexch_sec
+      DO ix = 1,nexch_sec
         spex10(ix+nexchange,jx,jy,jz) = convert*spcondex10(ix+nexchange,ConditionNumber)  ! Now in eq/m3 por. med.
       END DO
 
       DO is = 1,nsurf
         spsurf(is,jx,jy,jz)   = LOG(convert*spcondsurf10(is,ConditionNumber))
         IF (iedl(is) == 0) THEN
-          LogPotential(is,jx,jy,jz) = LogPotentialInit(is,ConditionNumber)
+          DO npt = 1,npot
+            IF (ksurf(is) == kpot(npt)) THEN
+              LogPotential(npt,jx,jy,jz) = LogPotentialInit(is,ConditionNumber)
+              EXIT
+            END IF
+          END DO
         END IF
       END DO
       DO is = 1,nsurf+nsurf_sec
@@ -6047,6 +6082,15 @@ IF (nBoundaryConditionZone > 0) THEN
           s(i,jx,jy,jz)        = scond(i,ConditionNumber)
         END DO
 
+        IF (DensityModule /= 'temperature') THEN
+          MeanSaltConcentration = 0.001d0*(wtaq(MeanSalt(1))*scond(MeanSalt(1),ConditionNumber) +   &
+              wtaq(MeanSalt(2))*scond(MeanSalt(2),ConditionNumber))
+          MassFraction = 1.0d0/(1.0d0 + MeanSaltConcentration)
+        ELSE
+          MassFraction = 1.0d0
+        END IF
+        convert = rocond(ConditionNumber)*porcond(ConditionNumber)*SaturationCond(ConditionNumber)*MassFraction
+
         DO kk = 1,ngas
           spgas10(kk,jx,jy,jz) = spcondgas10(kk,ConditionNumber)
           spgas(kk,jx,jy,jz)   = spcondgas(kk,ConditionNumber)
@@ -6055,14 +6099,19 @@ IF (nBoundaryConditionZone > 0) THEN
         do ix = 1,nexchange
           spex(ix,jx,jy,jz)    = spcondex(ix,ConditionNumber)
         end do
-        DO ix = 1,nexchange+nexch_sec
+        DO ix = 1,nexch_sec
           spex10(ix+nexchange,jx,jy,jz) = convert*spcondex10(ix+nexchange,ConditionNumber)  ! Now in eq/m3 por. med.
         END DO
 
         DO is = 1,nsurf
           spsurf(is,jx,jy,jz)   = LOG(convert*spcondsurf10(is,ConditionNumber))
           IF (iedl(is) == 0) THEN
-            LogPotential(is,jx,jy,jz) = LogPotentialInit(is,ConditionNumber)
+            DO npt = 1,npot
+              IF (ksurf(is) == kpot(npt)) THEN
+                LogPotential(npt,jx,jy,jz) = LogPotentialInit(is,ConditionNumber)
+                EXIT
+              END IF
+            END DO
           END IF
         END DO
         DO is = 1,nsurf+nsurf_sec
@@ -6100,6 +6149,15 @@ IF (nBoundaryConditionZone > 0) THEN
           s(i,jx,jy,jz)        = scond(i,ConditionNumber)
         END DO
 
+        IF (DensityModule /= 'temperature') THEN
+          MeanSaltConcentration = 0.001d0*(wtaq(MeanSalt(1))*scond(MeanSalt(1),ConditionNumber) +   &
+              wtaq(MeanSalt(2))*scond(MeanSalt(2),ConditionNumber))
+          MassFraction = 1.0d0/(1.0d0 + MeanSaltConcentration)
+        ELSE
+          MassFraction = 1.0d0
+        END IF
+        convert = rocond(ConditionNumber)*porcond(ConditionNumber)*SaturationCond(ConditionNumber)*MassFraction
+
         DO kk = 1,ngas
           spgas10(kk,jx,jy,jz) = spcondgas10(kk,ConditionNumber)
           spgas(kk,jx,jy,jz)   = spcondgas(kk,ConditionNumber)
@@ -6108,14 +6166,19 @@ IF (nBoundaryConditionZone > 0) THEN
         do ix = 1,nexchange
           spex(ix,jx,jy,jz)    = spcondex(ix,ConditionNumber)
         end do
-        DO ix = 1,nexchange+nexch_sec
+        DO ix = 1,nexch_sec
           spex10(ix+nexchange,jx,jy,jz) = convert*spcondex10(ix+nexchange,ConditionNumber)  ! Now in eq/m3 por. med.
         END DO
 
         DO is = 1,nsurf
           spsurf(is,jx,jy,jz)   = LOG(convert*spcondsurf10(is,ConditionNumber))
           IF (iedl(is) == 0) THEN
-            LogPotential(is,jx,jy,jz) = LogPotentialInit(is,ConditionNumber)
+            DO npt = 1,npot
+              IF (ksurf(is) == kpot(npt)) THEN
+                LogPotential(npt,jx,jy,jz) = LogPotentialInit(is,ConditionNumber)
+                EXIT
+              END IF
+            END DO
           END IF
         END DO
         DO is = 1,nsurf+nsurf_sec
@@ -6158,6 +6221,15 @@ IF (nBoundaryConditionZone > 0) THEN
           s(i,jx,jy,jz)        = scond(i,ConditionNumber)
         END DO
 
+        IF (DensityModule /= 'temperature') THEN
+          MeanSaltConcentration = 0.001d0*(wtaq(MeanSalt(1))*scond(MeanSalt(1),ConditionNumber) +   &
+              wtaq(MeanSalt(2))*scond(MeanSalt(2),ConditionNumber))
+          MassFraction = 1.0d0/(1.0d0 + MeanSaltConcentration)
+        ELSE
+          MassFraction = 1.0d0
+        END IF
+        convert = rocond(ConditionNumber)*porcond(ConditionNumber)*SaturationCond(ConditionNumber)*MassFraction
+
         DO kk = 1,ngas
           spgas10(kk,jx,jy,jz) = spcondgas10(kk,ConditionNumber)
           spgas(kk,jx,jy,jz)   = spcondgas(kk,ConditionNumber)
@@ -6166,14 +6238,19 @@ IF (nBoundaryConditionZone > 0) THEN
         do ix = 1,nexchange
           spex(ix,jx,jy,jz)    = spcondex(ix,ConditionNumber)
         end do
-        DO ix = 1,nexchange+nexch_sec
+        DO ix = 1,nexch_sec
           spex10(ix+nexchange,jx,jy,jz) = convert*spcondex10(ix+nexchange,ConditionNumber)  ! Now in eq/m3 por. med.
         END DO
 
         DO is = 1,nsurf
           spsurf(is,jx,jy,jz)   = LOG(convert*spcondsurf10(is,ConditionNumber))
           IF (iedl(is) == 0) THEN
-            LogPotential(is,jx,jy,jz) = LogPotentialInit(is,ConditionNumber)
+            DO npt = 1,npot
+              IF (ksurf(is) == kpot(npt)) THEN
+                LogPotential(npt,jx,jy,jz) = LogPotentialInit(is,ConditionNumber)
+                EXIT
+              END IF
+            END DO
           END IF
         END DO
         DO is = 1,nsurf+nsurf_sec
@@ -6212,6 +6289,15 @@ IF (nBoundaryConditionZone > 0) THEN
           s(i,jx,jy,jz)        = scond(i,ConditionNumber)
         END DO
 
+        IF (DensityModule /= 'temperature') THEN
+          MeanSaltConcentration = 0.001d0*(wtaq(MeanSalt(1))*scond(MeanSalt(1),ConditionNumber) +   &
+              wtaq(MeanSalt(2))*scond(MeanSalt(2),ConditionNumber))
+          MassFraction = 1.0d0/(1.0d0 + MeanSaltConcentration)
+        ELSE
+          MassFraction = 1.0d0
+        END IF
+        convert = rocond(ConditionNumber)*porcond(ConditionNumber)*SaturationCond(ConditionNumber)*MassFraction
+
         DO kk = 1,ngas
           spgas10(kk,jx,jy,jz) = spcondgas10(kk,ConditionNumber)
           spgas(kk,jx,jy,jz)   = spcondgas(kk,ConditionNumber)
@@ -6220,14 +6306,19 @@ IF (nBoundaryConditionZone > 0) THEN
         do ix = 1,nexchange
           spex(ix,jx,jy,jz)    = spcondex(ix,ConditionNumber)
         end do
-        DO ix = 1,nexchange+nexch_sec
+        DO ix = 1,nexch_sec
           spex10(ix+nexchange,jx,jy,jz) = convert*spcondex10(ix+nexchange,ConditionNumber)  ! Now in eq/m3 por. med.
         END DO
 
         DO is = 1,nsurf
           spsurf(is,jx,jy,jz)   = LOG(convert*spcondsurf10(is,ConditionNumber))
           IF (iedl(is) == 0) THEN
-            LogPotential(is,jx,jy,jz) = LogPotentialInit(is,ConditionNumber)
+            DO npt = 1,npot
+              IF (ksurf(is) == kpot(npt)) THEN
+                LogPotential(npt,jx,jy,jz) = LogPotentialInit(is,ConditionNumber)
+                EXIT
+              END IF
+            END DO
           END IF
         END DO
         DO is = 1,nsurf+nsurf_sec
