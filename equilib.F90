@@ -711,10 +711,9 @@ ihalf = 0
       IF (ChargeBalance) THEN
         DO i2 = 1,ncomp
           fj(i,i2) = 0.0
-!!          DO i3 = 1,ncomp
-!!            fj(i,i2) = fj(i,i2) + chg(i3)*dpsi(i3,i2) + chg(i3)*fsurftmp(i3,i2)
-!!            fj(i,i2) = fj(i,i2) + chg(i3)*dpsi(i3,i2) 
-!!          END DO
+          DO i3 = 1,ncomp
+            fj(i,i2) = fj(i,i2) + chg(i3)*fsurftmp(i3,i2)
+          END DO
           DO ksp = 1,nspec
             fj(i,i2) = fj(i,i2) + chg(ksp+ncomp)*muaq(ksp,i2)*sptmp10(ksp+ncomp)
           END DO
