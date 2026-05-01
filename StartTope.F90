@@ -5963,7 +5963,12 @@ IF (nBoundaryConditionZone > 0) THEN
       DO is = 1,nsurf
         spsurf(is,jx,jy,jz)   = LOG(convert*spcondsurf10(is,ConditionNumber))
         IF (iedl(is) == 0) THEN
-          LogPotential(is,jx,jy,jz) = LogPotentialInit(is,ConditionNumber)
+          DO npt = 1,npot
+            IF (ksurf(is) == kpot(npt)) THEN
+              LogPotential(npt,jx,jy,jz) = LogPotentialInit(is,ConditionNumber)
+              EXIT
+            END IF
+          END DO
         END IF
       END DO
       DO is = 1,nsurf+nsurf_sec
@@ -6025,7 +6030,12 @@ IF (nBoundaryConditionZone > 0) THEN
       DO is = 1,nsurf
         spsurf(is,jx,jy,jz)   = LOG(convert*spcondsurf10(is,ConditionNumber))
         IF (iedl(is) == 0) THEN
-          LogPotential(is,jx,jy,jz) = LogPotentialInit(is,ConditionNumber)
+          DO npt = 1,npot
+            IF (ksurf(is) == kpot(npt)) THEN
+              LogPotential(npt,jx,jy,jz) = LogPotentialInit(is,ConditionNumber)
+              EXIT
+            END IF
+          END DO
         END IF
       END DO
       DO is = 1,nsurf+nsurf_sec
@@ -6089,7 +6099,12 @@ IF (nBoundaryConditionZone > 0) THEN
         DO is = 1,nsurf
           spsurf(is,jx,jy,jz)   = LOG(convert*spcondsurf10(is,ConditionNumber))
           IF (iedl(is) == 0) THEN
-            LogPotential(is,jx,jy,jz) = LogPotentialInit(is,ConditionNumber)
+            DO npt = 1,npot
+              IF (ksurf(is) == kpot(npt)) THEN
+                LogPotential(npt,jx,jy,jz) = LogPotentialInit(is,ConditionNumber)
+                EXIT
+              END IF
+            END DO
           END IF
         END DO
         DO is = 1,nsurf+nsurf_sec
@@ -6151,7 +6166,12 @@ IF (nBoundaryConditionZone > 0) THEN
         DO is = 1,nsurf
           spsurf(is,jx,jy,jz)   = LOG(convert*spcondsurf10(is,ConditionNumber))
           IF (iedl(is) == 0) THEN
-            LogPotential(is,jx,jy,jz) = LogPotentialInit(is,ConditionNumber)
+            DO npt = 1,npot
+              IF (ksurf(is) == kpot(npt)) THEN
+                LogPotential(npt,jx,jy,jz) = LogPotentialInit(is,ConditionNumber)
+                EXIT
+              END IF
+            END DO
           END IF
         END DO
         DO is = 1,nsurf+nsurf_sec
@@ -6218,7 +6238,12 @@ IF (nBoundaryConditionZone > 0) THEN
         DO is = 1,nsurf
           spsurf(is,jx,jy,jz)   = LOG(convert*spcondsurf10(is,ConditionNumber))
           IF (iedl(is) == 0) THEN
-            LogPotential(is,jx,jy,jz) = LogPotentialInit(is,ConditionNumber)
+            DO npt = 1,npot
+              IF (ksurf(is) == kpot(npt)) THEN
+                LogPotential(npt,jx,jy,jz) = LogPotentialInit(is,ConditionNumber)
+                EXIT
+              END IF
+            END DO
           END IF
         END DO
         DO is = 1,nsurf+nsurf_sec
@@ -6281,7 +6306,12 @@ IF (nBoundaryConditionZone > 0) THEN
         DO is = 1,nsurf
           spsurf(is,jx,jy,jz)   = LOG(convert*spcondsurf10(is,ConditionNumber))
           IF (iedl(is) == 0) THEN
-            LogPotential(is,jx,jy,jz) = LogPotentialInit(is,ConditionNumber)
+            DO npt = 1,npot
+              IF (ksurf(is) == kpot(npt)) THEN
+                LogPotential(npt,jx,jy,jz) = LogPotentialInit(is,ConditionNumber)
+                EXIT
+              END IF
+            END DO
           END IF
         END DO
         DO is = 1,nsurf+nsurf_sec
