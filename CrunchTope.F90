@@ -1092,7 +1092,7 @@ DO jz = 1,nz
   DO jy = 1,ny
     DO jx = 1,nx
       DO npt = 1,npot
-        LogPotential(npt,jx,jy,jz) = LogPotentialInit(npt,jinit(jx,jy,jz))
+        LogPotential(npt,jx,jy,jz) = LogPotentialInit(ispot(npt),jinit(jx,jy,jz))
       END DO
     END DO
   END DO

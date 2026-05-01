@@ -2511,9 +2511,7 @@ isdepend = 0
 dependex = 0.0
 dependsurf = 0.0d0
 
-DO is = 1,nsurf
-  ispot(is) = is
-END DO
+ispot = 0
 
 ALLOCATE(stringarray(ncomp+nspec+nrct))
 stringarray = ' '
@@ -2717,6 +2715,15 @@ DO k = 1,nrct
      npot = npot + 1
      kpot(npot) = k
   END IF
+END DO
+
+DO npt = 1,npot
+  DO is = 1,nsurf
+    IF (iedl(is) == 0 .AND. ksurf(is) == kpot(npt)) THEN
+      ispot(npt) = is
+      EXIT
+    END IF
+  END DO
 END DO
 
 IF (ALLOCATED(surfcharge_init)) THEN
