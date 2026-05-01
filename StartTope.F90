@@ -5956,7 +5956,7 @@ IF (nBoundaryConditionZone > 0) THEN
       do ix = 1,nexchange
         spex(ix,jx,jy,jz)    = spcondex(ix,ConditionNumber)
       end do
-      DO ix = 1,nexchange+nexch_sec
+      DO ix = 1,nexch_sec
         spex10(ix+nexchange,jx,jy,jz) = convert*spcondex10(ix+nexchange,ConditionNumber)  ! Now in eq/m3 por. med.
       END DO
 
@@ -6018,7 +6018,7 @@ IF (nBoundaryConditionZone > 0) THEN
       do ix = 1,nexchange
         spex(ix,jx,jy,jz)    = spcondex(ix,ConditionNumber)
       end do
-      DO ix = 1,nexchange+nexch_sec
+      DO ix = 1,nexch_sec
         spex10(ix+nexchange,jx,jy,jz) = convert*spcondex10(ix+nexchange,ConditionNumber)  ! Now in eq/m3 por. med.
       END DO
 
@@ -6082,7 +6082,7 @@ IF (nBoundaryConditionZone > 0) THEN
         do ix = 1,nexchange
           spex(ix,jx,jy,jz)    = spcondex(ix,ConditionNumber)
         end do
-        DO ix = 1,nexchange+nexch_sec
+        DO ix = 1,nexch_sec
           spex10(ix+nexchange,jx,jy,jz) = convert*spcondex10(ix+nexchange,ConditionNumber)  ! Now in eq/m3 por. med.
         END DO
 
@@ -6144,7 +6144,7 @@ IF (nBoundaryConditionZone > 0) THEN
         do ix = 1,nexchange
           spex(ix,jx,jy,jz)    = spcondex(ix,ConditionNumber)
         end do
-        DO ix = 1,nexchange+nexch_sec
+        DO ix = 1,nexch_sec
           spex10(ix+nexchange,jx,jy,jz) = convert*spcondex10(ix+nexchange,ConditionNumber)  ! Now in eq/m3 por. med.
         END DO
 
@@ -6211,7 +6211,7 @@ IF (nBoundaryConditionZone > 0) THEN
         do ix = 1,nexchange
           spex(ix,jx,jy,jz)    = spcondex(ix,ConditionNumber)
         end do
-        DO ix = 1,nexchange+nexch_sec
+        DO ix = 1,nexch_sec
           spex10(ix+nexchange,jx,jy,jz) = convert*spcondex10(ix+nexchange,ConditionNumber)  ! Now in eq/m3 por. med.
         END DO
 
@@ -6274,7 +6274,7 @@ IF (nBoundaryConditionZone > 0) THEN
         do ix = 1,nexchange
           spex(ix,jx,jy,jz)    = spcondex(ix,ConditionNumber)
         end do
-        DO ix = 1,nexchange+nexch_sec
+        DO ix = 1,nexch_sec
           spex10(ix+nexchange,jx,jy,jz) = convert*spcondex10(ix+nexchange,ConditionNumber)  ! Now in eq/m3 por. med.
         END DO
 
