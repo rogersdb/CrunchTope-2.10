@@ -2244,12 +2244,11 @@ DO WHILE (nn <= nend)
                  IF (DABS(xn(ind)) > errmax) THEN
                     errmax = DABS(xn(ind))
                  END IF
-    !!!             IF (DABS(xn(ind)) > 0.9d0) THEN
-    !!!               xn(ind) = SIGN(0.9d0,xn(ind))
-    !!!               CONTINUE
-    !!!              ELSE
-    !!!                CONTINUE
-    !!!              END IF
+                  IF (DABS(xn(ind)) > 0.9d0) THEN
+                    xn(ind) = SIGN(0.9d0,xn(ind))
+                  ELSE
+                    CONTINUE
+                  END IF
                   LogPotential(npt,jx,jy,jz) = LogPotential(npt,jx,jy,jz) + xn(ind)
                 END DO
               END DO
